@@ -97,6 +97,12 @@ class RecordSaleTest extends TestCase
         $this->assertEquals(90, $sellingPrice);
     }
 
+    public function testSellingPriceIsOutputInComponent()
+    {
+        $component = Livewire::test(RecordSale::class, ['quantity' => '1', 'unitCost' => '10.00']);
+        $component->assertSee('23.33');
+    }
+
     public function testEventIsEmittedOnStore()
     {
         Livewire::test(RecordSale::class, ['quantity' => '1', 'unitCost' => '10.00'])
