@@ -8,4 +8,3 @@ class EloquentSaleRepository extends EloquentRepository implements SaleRepositor
 {
     //
 }
-
