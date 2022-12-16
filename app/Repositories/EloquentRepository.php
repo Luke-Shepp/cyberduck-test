@@ -27,10 +27,11 @@ abstract class EloquentRepository implements Repository
     }
 
     /**
+     * @param array $with
      * @return Collection
      */
-    public function all(): Collection
+    public function all(array $with = []): Collection
     {
-        return $this->model->all();
+        return $this->model->query()->with($with)->get();
     }
 }

@@ -2,8 +2,18 @@
     <form wire:submit.prevent="store">
         @error('quantity') <x-error :message="$message" /> @enderror
         @error('unitCost') <x-error :message="$message" /> @enderror
+        @error('product') <x-error :message="$message" /> @enderror
 
         <div class="flex flex-row space-x-6">
+            <div class="space-y-3">
+                <x-label for="product" :value="__('Product')" />
+                <x-select id="product" wire:model.defer="product">
+                    @foreach ($products as $product)
+                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                    @endforeach
+                </x-select>
+            </div>
+
             <div class="space-y-3">
                 <x-label for="quantity" :value="__('Quantity')" />
                 <x-input wire:model.debounce.250ms="quantity" id="quantity" type="number" min="1" step="1" autofocus />

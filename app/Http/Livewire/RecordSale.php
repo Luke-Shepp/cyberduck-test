@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\Repositories\Contracts\ProductRepository;
 use App\Repositories\Contracts\SaleRepository;
 use Cknow\Money\Money;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
@@ -14,11 +16,26 @@ class RecordSale extends Component
 
     public $unitCost = null;
 
+    public $product = null;
+
+    public Collection $products;
+
     /** @var array[] */
     protected $rules = [
         'quantity' => ['required', 'numeric', 'integer', 'gt:0'],
         'unitCost' => ['required', 'numeric', 'gt:0'],
+        'product' => ['required', 'exists:products,id'],
     ];
+
+    /**
+     * @param ProductRepository $repository
+     * @return void
+     */
+    public function mount(ProductRepository $repository): void
+    {
+        $this->products = $repository->all();
+        $this->product = $this->products->first()->id;
+    }
 
     /**
      * @return View
@@ -67,6 +84,9 @@ class RecordSale extends Component
             'quantity' => $this->quantity,
             'unit_cost' => $this->unitCost,
             'selling_price' => $this->sellingPrice,
+            'product_id' => $this->product,
+            'margin' => $this->margin,
+            'shipping_cost' => $this->shippingCost,
         ]);
 
         $this->emit('saleCreated');

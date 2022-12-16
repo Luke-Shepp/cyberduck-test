@@ -8,5 +8,5 @@ use Illuminate\Support\Collection;
 interface Repository
 {
     public function create(array $data): Model;
-    public function all(): Collection;
+    public function all(array $with = []): Collection;
 }

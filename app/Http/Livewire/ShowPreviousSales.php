@@ -28,7 +28,7 @@ class ShowPreviousSales extends Component
 
     public function loadSales(SaleRepository $repository)
     {
-        $this->sales = $repository->all()->reverse();
+        $this->sales = $repository->all(['product'])->reverse();
     }
 
     /**
