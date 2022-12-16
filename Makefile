@@ -16,7 +16,7 @@ install: ## Builds the environment for the first and starts it
 	docker-compose exec php-fpm php artisan migrate:fresh --seed
 	npm install
 	npm run dev
-	@echo -n "Happy coding! http://coffee-shopping.localhost"
+	@echo -n "Happy coding! http://coffee-shop.localhost"
 
 down: ## Remove containers
 	docker-compose down
