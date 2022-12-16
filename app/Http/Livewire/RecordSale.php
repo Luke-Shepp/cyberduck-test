@@ -16,7 +16,7 @@ class RecordSale extends Component
 
     public $unitCost = null;
 
-    public $product = null;
+    public $product = 1;
 
     public Collection $products;
 
@@ -34,7 +34,6 @@ class RecordSale extends Component
     public function mount(ProductRepository $repository): void
     {
         $this->products = $repository->all();
-        $this->product = $this->products->first()->id;
     }
 
     /**
@@ -67,7 +66,7 @@ class RecordSale extends Component
             return 0;
         }
 
-        return $cost->divide((string) (1 - (config('sales.margin') / 100)))
+        return $cost->divide((string) (1 - ($this->margin / 100)))
             ->add(Money::GBP($this->shippingCost))
             ->getAmount() / 100;
     }
@@ -100,7 +99,11 @@ class RecordSale extends Component
      */
     public function getMarginProperty(): int
     {
-        return config('sales.margin');
+        if (empty($this->product)) {
+            return 0;
+        }
+
+        return $this->products->firstWhere('id', $this->product)?->margin ?? 0;
     }
 
     /**
@@ -108,6 +111,10 @@ class RecordSale extends Component
      */
     public function getShippingCostProperty(): int
     {
-        return config('sales.shipping_cost');
+        if (empty($this->product)) {
+            return 0;
+        }
+
+        return $this->products->firstWhere('id', $this->product)?->shipping_cost ?? 0;
     }
 }

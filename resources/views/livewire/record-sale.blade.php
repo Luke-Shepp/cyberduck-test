@@ -7,9 +7,9 @@
         <div class="flex flex-row space-x-6">
             <div class="space-y-3">
                 <x-label for="product" :value="__('Product')" />
-                <x-select id="product" wire:model.defer="product">
+                <x-select id="product" wire:model="product">
                     @foreach ($products as $product)
-                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                        <option {{ $loop->first ? 'selected' : '' }} value="{{ $product->id }}">{{ $product->name }}</option>
                     @endforeach
                 </x-select>
             </div>

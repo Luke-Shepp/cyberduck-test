@@ -25,9 +25,9 @@ class AbstractRepositoryTest extends TestCase
     public function testGetsAllData()
     {
         $model = $this->mock(Model::class);
-        $model->shouldReceive('all')
-            ->once()
-            ->andReturn(new Collection());
+        $model->shouldReceive('query')->once()->andReturnSelf();
+        $model->shouldReceive('with')->once()->with([])->andReturnSelf();
+        $model->shouldReceive('get')->once()->andReturn(new Collection());
 
         $repo = $this->getMockForAbstractClass(EloquentRepository::class, [$model]);
 

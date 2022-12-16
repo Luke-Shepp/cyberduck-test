@@ -34,6 +34,8 @@ class ShowPreviousSalesTest extends TestCase
         $this->assertCount(3, $component->get('sales'));
 
         $component->assertSee($component->get('sales')->first()->unit_price);
+        $component->assertSee($component->get('sales')->first()->product->name);
         $component->assertSee($component->get('sales')->last()->unit_price);
+        $component->assertSee($component->get('sales')->last()->product->name);
     }
 }
