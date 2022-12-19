@@ -33,15 +33,10 @@ services:
       MYSQL_DATABASE: project
       MYSQL_USER: project
       MYSQL_PASSWORD: secret
-    volumes:
-      - db_data:/var/lib/mysql
     networks:
       - network
     ports:
       - "33060:3306"
-volumes:
-  db_data:
-    driver: "local"
 networks:
   network:
     driver: "bridge"
